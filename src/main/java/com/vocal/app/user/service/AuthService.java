@@ -2,6 +2,7 @@ package com.vocal.app.user.service;
 
 import com.vocal.app.user.dto.*;
 import com.vocal.app.user.entity.User;
+import com.vocal.app.global.enums.Role;
 import com.vocal.app.user.repository.UserRepository;
 import com.vocal.app.global.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -18,22 +19,32 @@ public class AuthService {
 
     @Transactional
     public Long register(RegisterRequest request) {
-        if (userRepository.existsByEmail(request.getEmail()))
-            throw new IllegalArgumentException("이미 사용 중인 이메일입니다: " + request.getEmail());
+        if (userRepository.existsByUsername(request.getUsername()))
+            throw new IllegalArgumentException("이미 사용 중인 아이디입니다: " + request.getUsername());
+
         return userRepository.save(User.builder()
+                .username(request.getUsername())
                 .email(request.getEmail())
                 .passwordHash(passwordEncoder.encode(request.getPassword()))
+                .name(request.getName())
                 .nickname(request.getNickname())
+                .birthDate(request.getBirthDate())
+                .phoneNumber(request.getPhoneNumber())
+                .role(Role.USER)
                 .build()).getUserId();
+    }
+
+    public boolean checkUsernameAvailable(String username) {
+        return !userRepository.existsByUsername(username);
     }
 
     @Transactional(readOnly = true)
     public TokenResponse login(LoginRequest request) {
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new BadCredentialsException("이메일 또는 비밀번호가 올바르지 않습니다."));
+        User user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new BadCredentialsException("아이디 또는 비밀번호가 올바르지 않습니다."));
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash()))
-            throw new BadCredentialsException("이메일 또는 비밀번호가 올바르지 않습니다.");
-        return buildToken(user.getEmail());
+            throw new BadCredentialsException("아이디 또는 비밀번호가 올바르지 않습니다.");
+        return buildToken(user.getUsername());
     }
 
     public TokenResponse refresh(RefreshRequest request) {
@@ -42,10 +53,10 @@ public class AuthService {
         return buildToken(tokenProvider.getEmail(request.getRefreshToken()));
     }
 
-    private TokenResponse buildToken(String email) {
+    private TokenResponse buildToken(String subject) {
         return TokenResponse.builder()
-                .accessToken(tokenProvider.createAccessToken(email))
-                .refreshToken(tokenProvider.createRefreshToken(email))
+                .accessToken(tokenProvider.createAccessToken(subject))
+                .refreshToken(tokenProvider.createRefreshToken(subject))
                 .tokenType("Bearer")
                 .expiresIn(tokenProvider.getAccessTokenExpiration())
                 .build();

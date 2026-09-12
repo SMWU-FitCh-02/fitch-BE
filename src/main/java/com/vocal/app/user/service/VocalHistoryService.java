@@ -1,6 +1,5 @@
 package com.vocal.app.user.service;
 
-import com.vocal.app.user.entity.VocalHistory;
 import com.vocal.app.user.repository.VocalHistoryRepository;
 import com.vocal.app.global.util.NoteUtil;
 import lombok.RequiredArgsConstructor;

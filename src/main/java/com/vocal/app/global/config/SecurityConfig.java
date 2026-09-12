@@ -1,6 +1,9 @@
 package com.vocal.app.global.config;
 
 import com.vocal.app.global.security.*;
+import com.vocal.app.global.security.JwtAuthenticationFilter;
+import com.vocal.app.global.security.JwtTokenProvider;
+import com.vocal.app.global.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,6 +41,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()).addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

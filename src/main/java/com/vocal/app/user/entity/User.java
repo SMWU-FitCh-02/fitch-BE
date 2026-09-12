@@ -4,6 +4,7 @@ import com.vocal.app.global.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,14 +21,23 @@ public class User {
     private Long userId;
 
     @Column(unique = true, nullable = false)
+    private String username;
+
+    @Column(unique = true)
     private String email;
 
     @Column(nullable = false)
     private String passwordHash;
 
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private String nickname;
 
+    private LocalDate birthDate;
+
+    private String phoneNumber;
 
     //역할 (관리자, 사용자)
     @Enumerated(EnumType.STRING)

@@ -10,6 +10,7 @@ import com.vocal.app.user.repository.VocalHistoryRepository;
 import com.vocal.app.global.util.NoteUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 @Service
@@ -26,6 +29,9 @@ public class VoiceService {
     private final UserRepository userRepository;
     private final VocalRangeRepository vocalRangeRepository;
     private final VocalHistoryRepository vocalHistoryRepository;
+
+    @Value("${ai.mock:true}")
+    private boolean useMockAi;
 
     @Transactional
     public VocalRangeResponse uploadAndAnalyze(Long userId, MultipartFile file) {
@@ -52,6 +58,9 @@ public class VoiceService {
     }
 
     private VoiceAnalysisResult forwardToAiServer(MultipartFile file) {
+        if (useMockAi) {
+            return mockAnalysis();
+        }
         try {
             MultipartBodyBuilder builder = new MultipartBodyBuilder();
             builder.part("file", file.getResource());
@@ -63,6 +72,17 @@ public class VoiceService {
             log.error("AI 서버 통신 오류", e);
             throw new RuntimeException("AI 분석 서버와 통신 중 오류가 발생했습니다.", e);
         }
+    }
+
+    // TODO: 실제 AI 분석 서버 연동 전까지 임시 Mock — application.yml의 ai.mock: false로 전환 시 실제 서버 호출
+    private VoiceAnalysisResult mockAnalysis() {
+        VoiceAnalysisResult result = new VoiceAnalysisResult();
+        int min = ThreadLocalRandom.current().nextInt(45, 55);   // 대략 C3~G3
+        int max = min + ThreadLocalRandom.current().nextInt(15, 25); // 최소보다 15~25 반음 위
+        result.setMinNote(min);
+        result.setMaxNote(max);
+        result.setStableScore(Math.round(ThreadLocalRandom.current().nextDouble(0.7, 0.95) * 100) / 100.0);
+        return result;
     }
 
     private VocalRangeResponse toResponse(Long userId, VocalRange r) {

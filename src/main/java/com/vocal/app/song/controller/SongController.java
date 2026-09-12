@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController @RequiredArgsConstructor
 public class SongController {
     private final SongService songService;
@@ -43,4 +45,16 @@ public class SongController {
                 .originalKey(song.getKey())
                 .adjustedKey(NoteUtil.adjustKey(song.getKey(), adjust)).build());
     }
+
+    @GetMapping("/songs")
+    public ResponseEntity<List<SongResponse>> getAllSongs() {
+        return ResponseEntity.ok(songService.getAllSongs());
+    }
+
+    @GetMapping("/songs/{id}")
+    public ResponseEntity<SongResponse> getSong(@PathVariable Long id) {
+        return ResponseEntity.ok(songService.getSong(id));
+    }
+
+
 }

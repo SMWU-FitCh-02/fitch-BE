@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service @RequiredArgsConstructor
 public class SongService {
     private final SongRepository songRepository;
@@ -53,5 +55,17 @@ public class SongService {
         if (!songRepository.existsById(songId))
             throw new IllegalArgumentException("존재하지 않는 곡: " + songId);
         songRepository.deleteById(songId);
+    }
+
+    public List<SongResponse> getAllSongs() {
+        return songRepository.findAll().stream()
+                .map(SongService::toResponse)
+                .toList();
+    }
+
+    public SongResponse getSong(Long id) {
+        Song song = songRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("곡을 찾을 수 없습니다: " + id));
+        return toResponse(song);
     }
 }
