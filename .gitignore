@@ -31,3 +31,4 @@ bin/
 
 ### 기타 ###
 *.log
+src/main/resources/application.yml
