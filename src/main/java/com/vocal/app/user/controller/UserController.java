@@ -7,7 +7,10 @@ import com.vocal.app.user.service.VocalHistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import com.vocal.app.user.dto.UpdateUserRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 import java.util.*;
 
 @RestController
@@ -36,5 +39,51 @@ public class UserController {
     @GetMapping("/{id}/vocal-history")
     public ResponseEntity<List<Map<String, Object>>> getHistory(@PathVariable("id") Long userId) {
         return ResponseEntity.ok(vocalHistoryService.getHistory(userId));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponse> updateUser(
+            @PathVariable("id") Long userId,
+            @RequestBody UpdateUserRequest request,
+            Authentication authentication) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원: " + userId));
+
+        if (!user.getUsername().equals(authentication.getName())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인 정보만 수정할 수 있습니다.");
+        }
+
+        if (request.getName() != null) user.setName(request.getName());
+        if (request.getNickname() != null) user.setNickname(request.getNickname());
+        if (request.getEmail() != null) user.setEmail(request.getEmail());
+        if (request.getBirthDate() != null) user.setBirthDate(request.getBirthDate());
+        if (request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
+        userRepository.save(user);
+
+        return ResponseEntity.ok(UserResponse.builder()
+                .userId(user.getUserId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .name(user.getName())
+                .nickname(user.getNickname())
+                .birthDate(user.getBirthDate())
+                .phoneNumber(user.getPhoneNumber())
+                .createdAt(user.getCreatedAt())
+                .build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(
+            @PathVariable("id") Long userId,
+            Authentication authentication) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원: " + userId));
+
+        if (!user.getUsername().equals(authentication.getName())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인 계정만 탈퇴할 수 있습니다.");
+        }
+
+        userRepository.deleteById(userId);
+        return ResponseEntity.ok(Map.of("message", "탈퇴 처리되었습니다."));
     }
 }
