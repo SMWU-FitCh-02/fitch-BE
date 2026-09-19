@@ -1,5 +1,6 @@
 package com.vocal.app.user.entity;
 
+import com.vocal.app.global.enums.Gender;
 import com.vocal.app.global.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -43,6 +44,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Column(updatable = false)
     private LocalDateTime createdAt;
