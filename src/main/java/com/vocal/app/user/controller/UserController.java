@@ -32,6 +32,7 @@ public class UserController {
                 .nickname(user.getNickname())
                 .birthDate(user.getBirthDate())
                 .phoneNumber(user.getPhoneNumber())
+                .gender(user.getGender())
                 .createdAt(user.getCreatedAt())
                 .build());
     }
@@ -58,6 +59,7 @@ public class UserController {
         if (request.getEmail() != null) user.setEmail(request.getEmail());
         if (request.getBirthDate() != null) user.setBirthDate(request.getBirthDate());
         if (request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
+        if (request.getGender() != null) user.setGender(request.getGender());
         userRepository.save(user);
 
         return ResponseEntity.ok(UserResponse.builder()
@@ -68,6 +70,7 @@ public class UserController {
                 .nickname(user.getNickname())
                 .birthDate(user.getBirthDate())
                 .phoneNumber(user.getPhoneNumber())
+                .gender(user.getGender())
                 .createdAt(user.getCreatedAt())
                 .build());
     }

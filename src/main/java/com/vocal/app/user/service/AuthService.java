@@ -30,6 +30,7 @@ public class AuthService {
                 .nickname(request.getNickname())
                 .birthDate(request.getBirthDate())
                 .phoneNumber(request.getPhoneNumber())
+                .gender(request.getGender())
                 .role(Role.USER)
                 .build()).getUserId();
     }

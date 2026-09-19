@@ -1,5 +1,6 @@
 package com.vocal.app.user.dto;
 
+import com.vocal.app.global.enums.Gender;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -30,4 +31,6 @@ public class RegisterRequest {
     private LocalDate birthDate;
 
     private String phoneNumber;
+
+    private Gender gender;
 }
