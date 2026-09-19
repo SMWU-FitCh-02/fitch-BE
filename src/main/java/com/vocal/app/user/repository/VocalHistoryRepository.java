@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface VocalHistoryRepository extends JpaRepository<VocalHistory, Long> {
     List<VocalHistory> findByUserUserIdOrderByMeasuredAtDesc(Long userId);
+    void deleteByUserUserId(Long userId);
 }

@@ -3,12 +3,14 @@ package com.vocal.app.user.controller;
 import com.vocal.app.user.dto.UserResponse;
 import com.vocal.app.user.entity.User;
 import com.vocal.app.user.repository.UserRepository;
+import com.vocal.app.user.repository.VocalHistoryRepository;
 import com.vocal.app.user.service.VocalHistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.vocal.app.user.dto.UpdateUserRequest;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 import java.util.*;
@@ -18,6 +20,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UserController {
     private final VocalHistoryService vocalHistoryService;
+    private final VocalHistoryRepository vocalHistoryRepository;
     private final UserRepository userRepository;
 
     @GetMapping("/{id}")
@@ -78,6 +81,7 @@ public class UserController {
                 .build());
     }
 
+    @Transactional
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(
             @PathVariable("id") Long userId,
@@ -89,6 +93,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인 계정만 탈퇴할 수 있습니다.");
         }
 
+        vocalHistoryRepository.deleteByUserUserId(userId);
         userRepository.deleteById(userId);
         return ResponseEntity.ok(Map.of("message", "탈퇴 처리되었습니다."));
     }
