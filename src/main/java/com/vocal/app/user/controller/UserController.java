@@ -61,7 +61,7 @@ public class UserController {
         if (request.getBirthDate() != null) user.setBirthDate(request.getBirthDate());
         if (request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
         if (request.getGender() != null) user.setGender(request.getGender());
-        if (request.getProfileImage() != null) user.setProfileImage(request.getProfileImage());
+        user.setProfileImage(request.getProfileImage());
         userRepository.save(user);
 
         return ResponseEntity.ok(UserResponse.builder()
