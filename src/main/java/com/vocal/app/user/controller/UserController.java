@@ -33,6 +33,7 @@ public class UserController {
                 .birthDate(user.getBirthDate())
                 .phoneNumber(user.getPhoneNumber())
                 .gender(user.getGender())
+                .profileImage(user.getProfileImage())
                 .createdAt(user.getCreatedAt())
                 .build());
     }
@@ -60,6 +61,7 @@ public class UserController {
         if (request.getBirthDate() != null) user.setBirthDate(request.getBirthDate());
         if (request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
         if (request.getGender() != null) user.setGender(request.getGender());
+        if (request.getProfileImage() != null) user.setProfileImage(request.getProfileImage());
         userRepository.save(user);
 
         return ResponseEntity.ok(UserResponse.builder()
@@ -71,6 +73,7 @@ public class UserController {
                 .birthDate(user.getBirthDate())
                 .phoneNumber(user.getPhoneNumber())
                 .gender(user.getGender())
+                .profileImage(user.getProfileImage())
                 .createdAt(user.getCreatedAt())
                 .build());
     }

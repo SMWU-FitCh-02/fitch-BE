@@ -12,4 +12,5 @@ public class UpdateUserRequest {
     private LocalDate birthDate;
     private String phoneNumber;
     private Gender gender;
+    private String profileImage;
 }

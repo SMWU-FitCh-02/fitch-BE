@@ -48,6 +48,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    // base64 data URL (e.g. "data:image/jpeg;base64,...") — @Lob so it maps to a
+    // LONGTEXT column instead of the default varchar(255)
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
+    private String profileImage;
+
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
