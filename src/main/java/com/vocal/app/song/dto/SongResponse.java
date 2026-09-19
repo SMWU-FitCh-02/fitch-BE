@@ -1,5 +1,6 @@
 package com.vocal.app.song.dto;
 
+import com.vocal.app.song.entity.ArtistGender;
 import lombok.*;
 
 @Getter @Builder
@@ -13,4 +14,5 @@ public class SongResponse {
     private Integer maxNote;
     private String minNoteLabel;
     private String maxNoteLabel;
+    private ArtistGender artistGender;
 }

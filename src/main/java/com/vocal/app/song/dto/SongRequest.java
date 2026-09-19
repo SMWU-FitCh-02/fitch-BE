@@ -1,5 +1,6 @@
 package com.vocal.app.song.dto;
 
+import com.vocal.app.song.entity.ArtistGender;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -11,4 +12,5 @@ public class SongRequest {
     private String key;
     @NotNull private Integer minNote;
     @NotNull private Integer maxNote;
+    private ArtistGender artistGender;
 }

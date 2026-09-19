@@ -19,7 +19,8 @@ public class SongService {
         return toResponse(songRepository.save(Song.builder()
                 .title(request.getTitle()).artist(request.getArtist())
                 .genre(request.getGenre()).key(request.getKey())
-                .minNote(request.getMinNote()).maxNote(request.getMaxNote()).build()));
+                .minNote(request.getMinNote()).maxNote(request.getMaxNote())
+                .artistGender(request.getArtistGender()).build()));
     }
 
     @Transactional(readOnly = true)
@@ -34,7 +35,8 @@ public class SongService {
                 .genre(song.getGenre()).key(song.getKey())
                 .minNote(song.getMinNote()).maxNote(song.getMaxNote())
                 .minNoteLabel(NoteUtil.toLabel(song.getMinNote()))
-                .maxNoteLabel(NoteUtil.toLabel(song.getMaxNote())).build();
+                .maxNoteLabel(NoteUtil.toLabel(song.getMaxNote()))
+                .artistGender(song.getArtistGender()).build();
     }
 
     @Transactional
@@ -47,6 +49,7 @@ public class SongService {
         song.setKey(request.getKey());
         song.setMinNote(request.getMinNote());
         song.setMaxNote(request.getMaxNote());
+        song.setArtistGender(request.getArtistGender());
         return toResponse(song);
     }
 
