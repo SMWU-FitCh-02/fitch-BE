@@ -23,8 +23,8 @@ jwt:
   access-token-expiration: 259200000
   refresh-token-expiration: 604800000
 ai:
-  mock: true
+  mock: false
   server:
-    url: http://localhost:8001
+    url: http://localhost:5000
 server:
   port: 8080
