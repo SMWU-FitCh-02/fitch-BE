@@ -29,6 +29,9 @@ public class Song {
     private Integer minNote;
     private Integer maxNote;
 
+    @Enumerated(EnumType.STRING)
+    private ArtistGender artistGender;
+
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
