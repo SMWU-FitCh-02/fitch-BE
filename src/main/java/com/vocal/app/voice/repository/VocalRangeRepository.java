@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface VocalRangeRepository extends JpaRepository<VocalRange, Long> {
     Optional<VocalRange> findTopByUserUserIdOrderByMeasuredAtDesc(Long userId);
+    void deleteByUserUserId(Long userId);
 }

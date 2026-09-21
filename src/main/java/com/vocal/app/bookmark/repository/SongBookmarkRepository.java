@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface SongBookmarkRepository extends JpaRepository<SongBookmark, Long> {
     List<SongBookmark> findByUserUserIdOrderByCreatedAtDesc(Long userId);
     Optional<SongBookmark> findByUserUserIdAndSongSongId(Long userId, Long songId);
+    void deleteByUserUserId(Long userId);
 }

@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface ChartLikeRepository extends JpaRepository<ChartLike, Long> {
     List<ChartLike> findByUserUserIdOrderByCreatedAtDesc(Long userId);
     Optional<ChartLike> findByUserUserIdAndExternalId(Long userId, String externalId);
+    void deleteByUserUserId(Long userId);
 }
