@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class RecommendController {
     private final RecommendService recommendService;
 
-    @GetMapping("/recommend/{userId}")
+    @GetMapping("/recommend/{userId:[0-9]+}")
     public ResponseEntity<RecommendResponse> recommend(
             @PathVariable Long userId,
             @RequestParam(required = false) String artist,
