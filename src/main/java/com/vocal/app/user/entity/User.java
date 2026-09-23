@@ -40,6 +40,10 @@ public class User {
 
     private String phoneNumber;
 
+    // 클릭한 순서를 유지한 콤마 구분 문자열 (예: "발라드,댄스,POP")
+    @Column(length = 100)
+    private String preferredGenres;
+
     //역할 (관리자, 사용자)
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

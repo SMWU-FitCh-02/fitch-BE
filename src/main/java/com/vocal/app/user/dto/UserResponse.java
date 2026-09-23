@@ -16,5 +16,6 @@ public class UserResponse {
     private String phoneNumber;
     private Gender gender;
     private String profileImage;
+    private String preferredGenres;
     private LocalDateTime createdAt;
 }

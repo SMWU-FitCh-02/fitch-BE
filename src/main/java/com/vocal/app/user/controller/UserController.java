@@ -42,6 +42,7 @@ public class UserController {
                 .birthDate(user.getBirthDate())
                 .phoneNumber(user.getPhoneNumber())
                 .gender(user.getGender())
+                .preferredGenres(user.getPreferredGenres())
                 .profileImage(user.getProfileImage())
                 .createdAt(user.getCreatedAt())
                 .build());
@@ -70,6 +71,7 @@ public class UserController {
         if (request.getBirthDate() != null) user.setBirthDate(request.getBirthDate());
         if (request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
         if (request.getGender() != null) user.setGender(request.getGender());
+        if (request.getPreferredGenres() != null) user.setPreferredGenres(request.getPreferredGenres());
         user.setProfileImage(request.getProfileImage());
         userRepository.save(user);
 
@@ -82,6 +84,7 @@ public class UserController {
                 .birthDate(user.getBirthDate())
                 .phoneNumber(user.getPhoneNumber())
                 .gender(user.getGender())
+                .preferredGenres(user.getPreferredGenres())
                 .profileImage(user.getProfileImage())
                 .createdAt(user.getCreatedAt())
                 .build());

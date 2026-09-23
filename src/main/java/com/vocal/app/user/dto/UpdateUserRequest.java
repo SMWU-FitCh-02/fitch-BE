@@ -13,4 +13,5 @@ public class UpdateUserRequest {
     private String phoneNumber;
     private Gender gender;
     private String profileImage;
+    private String preferredGenres;
 }
