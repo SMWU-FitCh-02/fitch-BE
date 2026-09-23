@@ -24,8 +24,8 @@ public class RegisterRequest {
     @NotBlank
     private String nickname;
 
-    @Email
-    @NotBlank
+    //@Email
+    //@NotBlank
     private String email;
 
     private LocalDate birthDate;
