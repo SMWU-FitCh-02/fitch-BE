@@ -5,6 +5,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+.env
+
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -20,7 +23,7 @@ out/
 .factorypath
 .project
 .settings
-.springBeans
+.springBeansjobs
 .sts4-cache
 bin/
 !**/src/main/**/bin/
@@ -31,7 +34,9 @@ bin/
 
 ### 기타 ###
 *.log
+src/main/resources/application.yml
 build/
 .gradle/
-*.wav
-.env
+*.log
+temp_audio.wav
+test.wav
