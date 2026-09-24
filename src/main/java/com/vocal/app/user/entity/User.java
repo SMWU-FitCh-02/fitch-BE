@@ -2,6 +2,7 @@ package com.vocal.app.user.entity;
 
 import com.vocal.app.global.enums.Gender;
 import com.vocal.app.global.enums.Role;
+import com.vocal.app.global.enums.SocialType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -51,6 +52,13 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private SocialType socialType = SocialType.LOCAL;
+
+    @Column(unique = true)
+    private String socialUid;
 
     // base64 data URL (e.g. "data:image/jpeg;base64,...") — @Lob so it maps to a
     // LONGTEXT column instead of the default varchar(255)

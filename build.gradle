@@ -41,6 +41,9 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'software.amazon.awssdk:bedrockruntime:2.29.1'
 }
 
 tasks.named('test') { useJUnitPlatform() }

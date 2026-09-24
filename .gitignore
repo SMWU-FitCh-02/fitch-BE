@@ -1,5 +1,37 @@
-HELP.md.gradlebuild/!gradle/wrapper/gradle-wrapper.jar!**/src/main/**/build/!**/src/test/**/build/echo ".env" >> .gitignore### IntelliJ IDEA ###.idea*.iws*.iml*.iprout/!**/src/main/**/out/!**/src/test/**/out/### Eclipse ###.apt_generated.classpath.factorypath.project.settings.springBeansjobs.sts4-cachebin/!**/src/main/**/bin/!**/src/test/**/bin/### macOS ###.DS_Store### 기타 ###*.logsrc/main/resources/application.ymlbuild/
-.gradle/
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### macOS ###
+.DS_Store
+
+### 기타 ###
 *.log
-temp_audio.wav
-test.wav
+build/
+.gradle/
+*.wav
+.env
