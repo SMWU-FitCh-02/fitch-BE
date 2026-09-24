@@ -36,6 +36,7 @@ security:
         kakao:
           client-id: ${KAKAO_REST_API_KEY}
           client-secret: ${KAKAO_REST_API_SECRET}
+          client-authentication-method: client_secret_post
           authorization-grant-type: authorization_code
           redirect-uri: "${KAKAO_REDIRECT_URI}"
           scope:
