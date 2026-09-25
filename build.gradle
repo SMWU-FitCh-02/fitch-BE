@@ -20,6 +20,7 @@ repositories {
 ext['lombok.version'] = '1.18.38'
 
 dependencies {
+    implementation 'software.amazon.awssdk:bedrockruntime:2.29.1'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -43,7 +44,6 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
 
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-    implementation 'software.amazon.awssdk:bedrockruntime:2.29.1'
 }
 
 tasks.named('test') { useJUnitPlatform() }
