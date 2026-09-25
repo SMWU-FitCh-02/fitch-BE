@@ -13,6 +13,9 @@ public class NoteUtil {
     }
 
     public static String adjustKey(String originalKey, int semitones) {
+        if (originalKey == null || originalKey.isBlank()) {   // ← 이 3줄 추가
+        return null;
+        }
         String normalizedKey = FLAT_TO_SHARP.getOrDefault(originalKey, originalKey);
         for (int i = 0; i < NOTE_NAMES.length; i++) {
             if (NOTE_NAMES[i].equalsIgnoreCase(normalizedKey))
