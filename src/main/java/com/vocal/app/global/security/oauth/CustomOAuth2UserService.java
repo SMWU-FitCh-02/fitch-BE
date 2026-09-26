@@ -1,5 +1,6 @@
 package com.vocal.app.global.security.oauth;
 
+import com.vocal.app.global.enums.Gender;
 import com.vocal.app.global.enums.Role;
 import com.vocal.app.global.enums.SocialType;
 import com.vocal.app.user.entity.User;
@@ -33,6 +34,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String email = (String) kakaoAccount.get("email");
         String nickname = (String) profile.get("nickname");
 
+        // 카카오가 내려주는 성별("male"/"female")을 우리 Gender enum으로 변환
+        String kakaoGender = (String) kakaoAccount.get("gender");
+        Gender gender = "male".equalsIgnoreCase(kakaoGender) ? Gender.MALE
+                : "female".equalsIgnoreCase(kakaoGender) ? Gender.FEMALE
+                  : null;
+
         User user = userRepository.findBySocialTypeAndSocialUid(SocialType.KAKAO, socialUid)
                 .orElseGet(() -> userRepository.save(
                         User.builder()
@@ -40,6 +47,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                                 .email(email)
                                 .name(nickname)
                                 .nickname(nickname)
+                                .gender(gender)
                                 .passwordHash(UUID.randomUUID().toString())
                                 .role(Role.USER)
                                 .socialType(SocialType.KAKAO)
