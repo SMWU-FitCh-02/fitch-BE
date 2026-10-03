@@ -57,8 +57,13 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        // 차트/음역대/아티스트 성별 등은 로그인 없이도 보이는 공개 데이터라서 허용
-                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/chart/**").permitAll()
+                        // bulk-upsert(관리자용 데이터 쓰기)는 계속 인증 필요 — 아래 /chart/** 공개
+                        // 규칙보다 먼저 와야 함(더 구체적인 규칙이 먼저 매칭되어야 함).
+                        .requestMatchers("/chart/vocal-ranges/bulk-upsert").authenticated()
+                        // 차트 목록/음역대/아티스트 성별 조회는 로그인 없이도 보이는 공개
+                        // 데이터라서 허용 (GET으로 조회하는 것도 있고, 곡 목록을 body에
+                        // 담아 보내는 배치조회라 POST로 호출하는 것도 있어서 메서드 제한 없이 허용).
+                        .requestMatchers("/chart/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")   // 추가
                         .anyRequest().authenticated()).addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).oauth2Login(oauth -> oauth
                         .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
