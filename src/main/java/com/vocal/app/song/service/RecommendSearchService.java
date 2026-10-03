@@ -63,7 +63,7 @@ public class RecommendSearchService {
                             .role(ConversationRole.USER)
                             .content(ContentBlock.builder().text(userPrompt).build())
                             .build())
-                    .inferenceConfig(cfg -> cfg.maxTokens(300))
+                    .inferenceConfig(cfg -> cfg.maxTokens(2000))
             );
 
             // reasoning 지원 모델은 응답이 여러 콘텐츠 블록으로 나뉘어 오기도 한다
