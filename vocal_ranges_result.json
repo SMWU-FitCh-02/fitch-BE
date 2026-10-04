@@ -1,602 +1,702 @@
 [
   {
-    "title": "행복하지 말아요",
-    "artist": "MC THE MAX",
+    "title": "퇴사할게여 (Narr. 기안84)",
+    "artist": "소연 (SOYEON)",
     "minNote": 61,
-    "maxNote": 69
+    "maxNote": 71,
+    "vocalSeparated": true
   },
   {
-    "title": "Drowning",
-    "artist": "WOODZ(조승연)",
+    "title": "LOVE ATTACK",
+    "artist": "RESCENE (리센느)",
     "minNote": 58,
-    "maxNote": 70
+    "maxNote": 70,
+    "vocalSeparated": true
   },
   {
-    "title": "응급실(쾌걸춘향OST)",
-    "artist": "izi",
-    "minNote": 52,
-    "maxNote": 66
+    "title": "Deja Vu",
+    "artist": "RESCENE (리센느)",
+    "minNote": 61,
+    "maxNote": 69,
+    "vocalSeparated": true
   },
   {
-    "title": "나였으면(황태자의첫사랑OST)",
-    "artist": "나윤권",
-    "minNote": 52,
-    "maxNote": 67
-  },
-  {
-    "title": "좋니",
-    "artist": "윤종신",
-    "minNote": 53,
-    "maxNote": 68
-  },
-  {
-    "title": "삭제",
-    "artist": "이승기",
-    "minNote": 55,
-    "maxNote": 67
-  },
-  {
-    "title": "어디에도",
-    "artist": "MC THE MAX",
-    "minNote": 56,
-    "maxNote": 71
-  },
-  {
-    "title": "바다의 왕자",
-    "artist": "박명수",
-    "minNote": 57,
-    "maxNote": 62
-  },
-  {
-    "title": "천상연(웹툰 '선녀외전' X 이창섭(LEE CHANGSUB))",
-    "artist": "이창섭",
-    "minNote": 54,
-    "maxNote": 65
-  },
-  {
-    "title": "晩餐歌",
-    "artist": "tuki.",
-    "minNote": 56,
-    "maxNote": 71
-  },
-  {
-    "title": "입춘",
-    "artist": "한로로",
-    "minNote": 60,
-    "maxNote": 70
-  },
-  {
-    "title": "말리꽃(비천무OST)",
-    "artist": "이승철",
-    "minNote": 56,
-    "maxNote": 71
-  },
-  {
-    "title": "참 다행이야",
-    "artist": "SPAPA",
-    "minNote": 56,
-    "maxNote": 65
-  },
-  {
-    "title": "그대라는 사치",
-    "artist": "한동근",
-    "minNote": 53,
-    "maxNote": 68
-  },
-  {
-    "title": "남자를 몰라",
-    "artist": "버즈",
-    "minNote": 57,
-    "maxNote": 66
-  },
-  {
-    "title": "애상",
-    "artist": "쿨",
-    "minNote": 59,
-    "maxNote": 71
-  },
-  {
-    "title": "Pretender",
-    "artist": "Official髭男dism",
-    "minNote": 56,
-    "maxNote": 70
-  },
-  {
-    "title": "이미 슬픈 사랑",
-    "artist": "야다",
-    "minNote": 51,
-    "maxNote": 75
-  },
-  {
-    "title": "...사랑했잖아...(2024)",
-    "artist": "고경표",
-    "minNote": 56,
-    "maxNote": 74
-  },
-  {
-    "title": "가질 수 없는 너",
-    "artist": "뱅크",
-    "minNote": 58,
-    "maxNote": 69
-  },
-  {
-    "title": "너의 모든 순간(별에서온그대OST)",
-    "artist": "성시경",
-    "minNote": 53,
-    "maxNote": 67
+    "title": "갑자기",
+    "artist": "아이오아이 (I.O.I)",
+    "minNote": 62,
+    "maxNote": 68,
+    "vocalSeparated": true
   },
   {
     "title": "Pretty Girl",
-    "artist": "RESCENE(리센느)",
+    "artist": "RESCENE (리센느)",
     "minNote": 64,
-    "maxNote": 71
+    "maxNote": 71,
+    "vocalSeparated": true
   },
   {
-    "title": "0+0",
-    "artist": "한로로",
-    "minNote": 59,
-    "maxNote": 67
+    "title": "REDRED",
+    "artist": "CORTIS (코르티스)",
+    "minNote": 53,
+    "maxNote": 65,
+    "vocalSeparated": true
   },
   {
-    "title": "첫눈처럼 너에게 가겠다(도깨비OST)",
-    "artist": "에일리",
+    "title": "BAD",
+    "artist": "ATEEZ(에이티즈)",
     "minNote": 58,
-    "maxNote": 72
+    "maxNote": 70,
+    "vocalSeparated": true
   },
   {
-    "title": "사랑의 바보",
-    "artist": "The Nuts",
-    "minNote": 57,
-    "maxNote": 67
-  },
-  {
-    "title": "My Love(And)",
-    "artist": "버즈",
+    "title": "만찬가",
+    "artist": "태연 (TAEYEON)",
     "minNote": 56,
-    "maxNote": 67
+    "maxNote": 70,
+    "vocalSeparated": true
   },
   {
-    "title": "가시",
-    "artist": "버즈",
-    "minNote": 57,
-    "maxNote": 68
+    "title": "BiiiG",
+    "artist": "BIGBANG (빅뱅)",
+    "minNote": 56,
+    "maxNote": 65,
+    "vocalSeparated": true
   },
   {
-    "title": "꿈속에 너",
-    "artist": "에이치코드(Feat.전상근)",
-    "minNote": 52,
-    "maxNote": 66
+    "title": "LEMONADE",
+    "artist": "aespa",
+    "minNote": 58,
+    "maxNote": 68,
+    "vocalSeparated": true
   },
   {
-    "title": "소주 한잔",
-    "artist": "임창정",
-    "minNote": 51,
-    "maxNote": 66
+    "title": "Drowning",
+    "artist": "WOODZ",
+    "minNote": 58,
+    "maxNote": 70,
+    "vocalSeparated": true
   },
   {
-    "title": "내 머리가 나빠서(드라마'꽃보다남자'OST)",
-    "artist": "SS501",
-    "minNote": 52,
-    "maxNote": 66
+    "title": "It′s Me",
+    "artist": "아일릿(ILLIT)",
+    "minNote": 58,
+    "maxNote": 70,
+    "vocalSeparated": true
   },
   {
-    "title": "그대만 있다면(여름날우리 X 너드커넥션(Nerd Connection))",
-    "artist": "너드커넥션(Nerd Connection)",
-    "minNote": 57,
-    "maxNote": 65
+    "title": "노스탈지아",
+    "artist": "BIG Naughty (서동현)",
+    "minNote": 58,
+    "maxNote": 62,
+    "vocalSeparated": true
   },
   {
-    "title": "좋은 밤 좋은 꿈",
-    "artist": "너드커넥션(Nerd Connection)",
-    "minNote": 50,
-    "maxNote": 66
+    "title": "Dear my crazy soulmate",
+    "artist": "아이유",
+    "minNote": 58,
+    "maxNote": 70,
+    "vocalSeparated": true
+  },
+  {
+    "title": "사랑은 늘 도망가",
+    "artist": "임영웅",
+    "minNote": 55,
+    "maxNote": 63,
+    "vocalSeparated": true
   },
   {
     "title": "사랑하게 될 거야",
     "artist": "한로로",
     "minNote": 59,
-    "maxNote": 71
+    "maxNote": 71,
+    "vocalSeparated": true
   },
   {
-    "title": "죽일 놈(Guilty)",
-    "artist": "다이나믹듀오",
-    "minNote": 57,
-    "maxNote": 65
+    "title": "Good Goodbye",
+    "artist": "화사 (HWASA)",
+    "minNote": 61,
+    "maxNote": 69,
+    "vocalSeparated": true
   },
   {
-    "title": "비행기",
-    "artist": "거북이",
+    "title": "이 별로부터",
+    "artist": "아이유",
     "minNote": 60,
-    "maxNote": 71
+    "maxNote": 72,
+    "vocalSeparated": true
   },
   {
-    "title": "심(心)",
-    "artist": "DK(디셈버)",
-    "minNote": 53,
-    "maxNote": 73
+    "title": "캐치 캐치",
+    "artist": "YENA (최예나)",
+    "minNote": 61,
+    "maxNote": 73,
+    "vocalSeparated": true
   },
   {
-    "title": "붉은 노을",
-    "artist": "빅뱅",
+    "title": "RUDE!",
+    "artist": "Hearts2Hearts (하츠투하츠)",
     "minNote": 59,
-    "maxNote": 76
+    "maxNote": 71,
+    "vocalSeparated": true
   },
   {
-    "title": "사랑합니다",
-    "artist": "Tim",
+    "title": "꿈꾸던 어른이 되었나요?",
+    "artist": "머무르",
+    "minNote": 53,
+    "maxNote": 70,
+    "vocalSeparated": true
+  },
+  {
+    "title": "생각을 멈추다 보면",
+    "artist": "최유리",
+    "minNote": 59,
+    "maxNote": 71,
+    "vocalSeparated": true
+  },
+  {
+    "title": "0+0",
+    "artist": "한로로",
+    "minNote": 59,
+    "maxNote": 67,
+    "vocalSeparated": true
+  },
+  {
+    "title": "어떻게 이별까지 사랑하겠어, 널 사랑하는 거지",
+    "artist": "AKMU (악뮤)",
+    "minNote": 53,
+    "maxNote": 69,
+    "vocalSeparated": true
+  },
+  {
+    "title": "또또",
+    "artist": "임영웅",
+    "minNote": 55,
+    "maxNote": 68,
+    "vocalSeparated": true
+  },
+  {
+    "title": "Popcorn",
+    "artist": "도경수(D.O.)",
     "minNote": 52,
-    "maxNote": 64
+    "maxNote": 66,
+    "vocalSeparated": true
   },
   {
-    "title": "만찬가",
-    "artist": "태연",
-    "minNote": 56,
-    "maxNote": 70
-  },
-  {
-    "title": "REDRED",
-    "artist": "CORTIS(코르티스)",
+    "title": "우리들의 블루스",
+    "artist": "임영웅",
     "minNote": 53,
-    "maxNote": 65
+    "maxNote": 65,
+    "vocalSeparated": true
   },
   {
-    "title": "가을 안부",
-    "artist": "먼데이키즈",
-    "minNote": 54,
-    "maxNote": 69
+    "title": "Skibidi",
+    "artist": "소녀시대-효리수 (Girls' Generation-HRS)",
+    "minNote": 58,
+    "maxNote": 69,
+    "vocalSeparated": true
   },
   {
-    "title": "다시 사랑한다면(니글니글버터플라이)",
-    "artist": "김필",
-    "minNote": 56,
-    "maxNote": 67
+    "title": "타임캡슐",
+    "artist": "다비치",
+    "minNote": 62,
+    "maxNote": 76,
+    "vocalSeparated": true
   },
   {
-    "title": "시든 꽃에 물을 주듯",
-    "artist": "HYNN(박혜원)",
-    "minNote": 63,
-    "maxNote": 73
-  },
-  {
-    "title": "아로하(슬기로운의사생활OST)",
-    "artist": "조정석",
-    "minNote": 54,
-    "maxNote": 64
-  },
-  {
-    "title": "포장마차",
-    "artist": "황인욱",
-    "minNote": 54,
-    "maxNote": 69
-  },
-  {
-    "title": "오래된 노래",
-    "artist": "스탠딩에그",
-    "minNote": 53,
-    "maxNote": 67
-  },
-  {
-    "title": "All For You(응답하라1997 OST)",
-    "artist": "서인국,정은지",
-    "minNote": 57,
-    "maxNote": 71
-  },
-  {
-    "title": "어제보다 슬픈 오늘",
-    "artist": "우디",
-    "minNote": 59,
-    "maxNote": 75
+    "title": "순간을 영원처럼",
+    "artist": "임영웅",
+    "minNote": 55,
+    "maxNote": 68,
+    "vocalSeparated": true
   },
   {
     "title": "여름아 부탁해",
     "artist": "볼빨간사춘기",
-    "minNote": 60,
-    "maxNote": 82
+    "minNote": 68,
+    "maxNote": 82,
+    "vocalSeparated": true
   },
   {
-    "title": "까만안경",
-    "artist": "이루(Feat.Daylight)",
+    "title": "너의 모든 순간",
+    "artist": "성시경",
+    "minNote": 52,
+    "maxNote": 65,
+    "vocalSeparated": true
+  },
+  {
+    "title": "HOME SWEET HOME (feat. 태양, 대성)",
+    "artist": "G-DRAGON",
+    "minNote": 58,
+    "maxNote": 66,
+    "vocalSeparated": true
+  },
+  {
+    "title": "부디 행복해질 것",
+    "artist": "임영웅",
+    "minNote": 52,
+    "maxNote": 72,
+    "vocalSeparated": true
+  },
+  {
+    "title": "기쁨, 슬픔, 아름다운 마음",
+    "artist": "AKMU (악뮤)",
+    "minNote": 58,
+    "maxNote": 66,
+    "vocalSeparated": true
+  },
+  {
+    "title": "Pop Off Pop Off",
+    "artist": "KiiiKiii (키키)",
+    "minNote": 57,
+    "maxNote": 65,
+    "vocalSeparated": true
+  },
+  {
+    "title": "Lemon Tang",
+    "artist": "Hearts2Hearts (하츠투하츠)",
+    "minNote": 61,
+    "maxNote": 74,
+    "vocalSeparated": true
+  },
+  {
+    "title": "오늘만 I LOVE YOU",
+    "artist": "BOYNEXTDOOR",
+    "minNote": 57,
+    "maxNote": 67,
+    "vocalSeparated": true
+  },
+  {
+    "title": "어제보다 슬픈 오늘",
+    "artist": "우디 (Woody)",
+    "minNote": 53,
+    "maxNote": 67,
+    "vocalSeparated": true
+  },
+  {
+    "title": "소문의 낙원",
+    "artist": "AKMU (악뮤)",
+    "minNote": 60,
+    "maxNote": 67,
+    "vocalSeparated": true
+  },
+  {
+    "title": "Baila",
+    "artist": "임영웅",
+    "minNote": 58,
+    "maxNote": 66,
+    "vocalSeparated": true
+  },
+  {
+    "title": "Blue Valentine",
+    "artist": "NMIXX",
+    "minNote": 57,
+    "maxNote": 73,
+    "vocalSeparated": true
+  },
+  {
+    "title": "내게 사랑이 뭐냐고 물어본다면",
+    "artist": "로이킴",
+    "minNote": 55,
+    "maxNote": 66,
+    "vocalSeparated": true
+  },
+  {
+    "title": "봄 내음보다 너를",
+    "artist": "김나영",
+    "minNote": 55,
+    "maxNote": 71,
+    "vocalSeparated": true
+  },
+  {
+    "title": "404 (New Era)",
+    "artist": "KiiiKiii (키키)",
+    "minNote": 58,
+    "maxNote": 70,
+    "vocalSeparated": true
+  },
+  {
+    "title": "천상연",
+    "artist": "이창섭",
+    "minNote": 54,
+    "maxNote": 66,
+    "vocalSeparated": true
+  },
+  {
+    "title": "이 밤을 빌려 말해요",
+    "artist": "PLAVE",
+    "minNote": 54,
+    "maxNote": 66,
+    "vocalSeparated": true
+  },
+  {
+    "title": "모이세",
+    "artist": "임영웅",
+    "minNote": 55,
+    "maxNote": 67,
+    "vocalSeparated": true
+  },
+  {
+    "title": "그대만 있다면 (여름날 우리 X 너드커넥션 (Nerd Connection))",
+    "artist": "너드커넥션 (Nerd Connection)",
+    "minNote": 57,
+    "maxNote": 65,
+    "vocalSeparated": true
+  },
+  {
+    "title": "살아온 우리에게",
+    "artist": "임영웅",
+    "minNote": 52,
+    "maxNote": 64,
+    "vocalSeparated": true
+  },
+  {
+    "title": "BANG BANG",
+    "artist": "IVE (아이브)",
+    "minNote": 59,
+    "maxNote": 71,
+    "vocalSeparated": true
+  },
+  {
+    "title": "toxic till the end",
+    "artist": "로제 (ROSÉ)",
+    "minNote": 55,
+    "maxNote": 71,
+    "vocalSeparated": true
+  },
+  {
+    "title": "Runaway",
+    "artist": "RESCENE (리센느)",
+    "minNote": 59,
+    "maxNote": 72,
+    "vocalSeparated": true
+  },
+  {
+    "title": "한 페이지가 될 수 있게",
+    "artist": "DAY6 (데이식스)",
+    "minNote": 61,
+    "maxNote": 70,
+    "vocalSeparated": true
+  },
+  {
+    "title": "모래 알갱이 RE",
+    "artist": "임영웅",
+    "minNote": 53,
+    "maxNote": 65,
+    "vocalSeparated": true
+  },
+  {
+    "title": "CRASH",
+    "artist": "ALLDAY PROJECT",
     "minNote": 51,
-    "maxNote": 66
+    "maxNote": 68,
+    "vocalSeparated": true
   },
   {
-    "title": "서울의 달",
-    "artist": "김건모",
+    "title": "미워요 RE",
+    "artist": "임영웅",
     "minNote": 55,
-    "maxNote": 67
+    "maxNote": 66,
+    "vocalSeparated": true
   },
   {
-    "title": "ベテルギウス(ドラマ'SUPER RICH' OST)",
-    "artist": "優里",
-    "minNote": 53,
-    "maxNote": 69
-  },
-  {
-    "title": "너였다면(또오해영OST)",
-    "artist": "정승환",
+    "title": "사랑은 늘 도망가 RE",
+    "artist": "임영웅",
     "minNote": 54,
-    "maxNote": 67
+    "maxNote": 67,
+    "vocalSeparated": true
   },
   {
-    "title": "One Love",
-    "artist": "MC THE MAX",
-    "minNote": 54,
-    "maxNote": 71
+    "title": "New York",
+    "artist": "임영웅",
+    "minNote": 57,
+    "maxNote": 67,
+    "vocalSeparated": true
   },
   {
-    "title": "기다리다",
-    "artist": "윤하",
-    "minNote": 60,
-    "maxNote": 69
+    "title": "멸종위기사랑",
+    "artist": "이찬혁",
+    "minNote": 52,
+    "maxNote": 74,
+    "vocalSeparated": true
   },
   {
-    "title": "모르시나요",
-    "artist": "조째즈(Prod.로코베리)",
-    "minNote": 53,
-    "maxNote": 68
-  },
-  {
-    "title": "떠나가요, 떠나지마요",
-    "artist": "더 크로스",
-    "minNote": 55,
-    "maxNote": 67
-  },
-  {
-    "title": "체념",
-    "artist": "빅마마",
+    "title": "A Bientot RE",
+    "artist": "임영웅",
     "minNote": 58,
-    "maxNote": 72
+    "maxNote": 70,
+    "vocalSeparated": true
   },
   {
-    "title": "오르막길",
-    "artist": "윤종신",
+    "title": "모르시나요(PROD.로코베리)",
+    "artist": "조째즈",
+    "minNote": 53,
+    "maxNote": 68,
+    "vocalSeparated": true
+  },
+  {
+    "title": "주저하는 연인들을 위해",
+    "artist": "잔나비",
+    "minNote": 55,
+    "maxNote": 66,
+    "vocalSeparated": true
+  },
+  {
+    "title": "너에게 닿기를",
+    "artist": "10CM",
     "minNote": 56,
-    "maxNote": 65
+    "maxNote": 66,
+    "vocalSeparated": true
   },
   {
-    "title": "당신을 위하여",
-    "artist": "더 크로스",
-    "minNote": 58,
-    "maxNote": 79
+    "title": "모든 날, 모든 순간 (Every day, Every Moment)",
+    "artist": "폴킴",
+    "minNote": 56,
+    "maxNote": 63,
+    "vocalSeparated": true
   },
   {
-    "title": "중독된 사랑",
-    "artist": "조장혁",
+    "title": "Whiplash",
+    "artist": "aespa",
+    "minNote": 57,
+    "maxNote": 70,
+    "vocalSeparated": true
+  },
+  {
+    "title": "Seven (feat. Latto) - Clean Ver.",
+    "artist": "정국",
+    "minNote": 56,
+    "maxNote": 68,
+    "vocalSeparated": true
+  },
+  {
+    "title": "SWIM",
+    "artist": "방탄소년단",
     "minNote": 52,
-    "maxNote": 66
+    "maxNote": 61,
+    "vocalSeparated": true
   },
   {
-    "title": "끝사랑",
-    "artist": "김범수",
-    "minNote": 52,
-    "maxNote": 66
+    "title": "뛰어(JUMP)",
+    "artist": "BLACKPINK",
+    "minNote": 60,
+    "maxNote": 77,
+    "vocalSeparated": true
+  },
+  {
+    "title": "Guitarist",
+    "artist": "도경수(D.O.)",
+    "minNote": 59,
+    "maxNote": 71,
+    "vocalSeparated": true
+  },
+  {
+    "title": "소나기",
+    "artist": "이클립스 (ECLIPSE)",
+    "minNote": 53,
+    "maxNote": 65,
+    "vocalSeparated": true
+  },
+  {
+    "title": "그댈 위한 멜로디",
+    "artist": "임영웅",
+    "minNote": 55,
+    "maxNote": 67,
+    "vocalSeparated": true
+  },
+  {
+    "title": "HAPPY",
+    "artist": "DAY6 (데이식스)",
+    "minNote": 57,
+    "maxNote": 68,
+    "vocalSeparated": true
+  },
+  {
+    "title": "청춘만화",
+    "artist": "이무진",
+    "minNote": 57,
+    "maxNote": 69,
+    "vocalSeparated": true
+  },
+  {
+    "title": "Dynamite",
+    "artist": "방탄소년단",
+    "minNote": 64,
+    "maxNote": 73,
+    "vocalSeparated": true
+  },
+  {
+    "title": "Heavy Serenade",
+    "artist": "NMIXX",
+    "minNote": 62,
+    "maxNote": 78,
+    "vocalSeparated": true
+  },
+  {
+    "title": "예뻤어",
+    "artist": "DAY6 (데이식스)",
+    "minNote": 55,
+    "maxNote": 68,
+    "vocalSeparated": true
+  },
+  {
+    "title": "봄날",
+    "artist": "방탄소년단",
+    "minNote": 55,
+    "maxNote": 77,
+    "vocalSeparated": true
+  },
+  {
+    "title": "like JENNIE",
+    "artist": "제니 (JENNIE)",
+    "minNote": 56,
+    "maxNote": 69,
+    "vocalSeparated": true
+  },
+  {
+    "title": "Love wins all",
+    "artist": "아이유",
+    "minNote": 61,
+    "maxNote": 75,
+    "vocalSeparated": true
   },
   {
     "title": "헤어지자 말해요",
     "artist": "박재정",
-    "minNote": 51,
-    "maxNote": 67
-  },
-  {
-    "title": "怪獣の花唄",
-    "artist": "Vaundy",
-    "minNote": 59,
-    "maxNote": 69
-  },
-  {
-    "title": "예뻤어",
-    "artist": "데이식스",
-    "minNote": 55,
-    "maxNote": 68
-  },
-  {
-    "title": "술 한잔 해요",
-    "artist": "지아",
-    "minNote": 57,
-    "maxNote": 74
-  },
-  {
-    "title": "지나오다",
-    "artist": "닐로",
-    "minNote": 55,
-    "maxNote": 69
-  },
-  {
-    "title": "눈사람",
-    "artist": "정승환",
-    "minNote": 56,
-    "maxNote": 68
-  },
-  {
-    "title": "가을 타나 봐",
-    "artist": "바이브",
-    "minNote": 60,
-    "maxNote": 68
-  },
-  {
-    "title": "Tears",
-    "artist": "소찬휘",
-    "minNote": 62,
-    "maxNote": 75
-  },
-  {
-    "title": "눈의 꽃(미안하다사랑한다OST)",
-    "artist": "박효신",
-    "minNote": 55,
-    "maxNote": 67
-  },
-  {
-    "title": "잊었니(신들의만찬OST)",
-    "artist": "이승철",
-    "minNote": 57,
-    "maxNote": 68
-  },
-  {
-    "title": "I Love You",
-    "artist": "포지션",
-    "minNote": 57,
-    "maxNote": 69
-  },
-  {
-    "title": "나를 사랑했던 사람아",
-    "artist": "허각",
-    "minNote": 58,
-    "maxNote": 71
-  },
-  {
-    "title": "나에게로 떠나는 여행",
-    "artist": "버즈",
-    "minNote": 59,
-    "maxNote": 67
-  },
-  {
-    "title": "형(兄)",
-    "artist": "노라조",
-    "minNote": 54,
-    "maxNote": 71
-  },
-  {
-    "title": "눈, 코, 입",
-    "artist": "태양",
-    "minNote": 59,
-    "maxNote": 65
-  },
-  {
-    "title": "안아줘",
-    "artist": "정준일",
     "minNote": 50,
-    "maxNote": 64
+    "maxNote": 64,
+    "vocalSeparated": true
   },
   {
-    "title": "LOVE ATTACK",
-    "artist": "RESCENE(리센느)",
-    "minNote": 58,
-    "maxNote": 70
+    "title": "입춘",
+    "artist": "한로로",
+    "minNote": 60,
+    "maxNote": 70,
+    "vocalSeparated": true
   },
   {
-    "title": "다시 만난 세계",
-    "artist": "소녀시대",
+    "title": "그대 작은 나의 세상이 되어",
+    "artist": "카더가든",
+    "minNote": 57,
+    "maxNote": 67,
+    "vocalSeparated": true
+  },
+  {
+    "title": "Golden",
+    "artist": "HUNTR/X",
     "minNote": 62,
-    "maxNote": 74
+    "maxNote": 78,
+    "vocalSeparated": true
   },
   {
-    "title": "버스 안에서",
-    "artist": "자자",
-    "minNote": 58,
-    "maxNote": 73
+    "title": "연애의 조건 (Love Options)",
+    "artist": "베스티",
+    "minNote": 67,
+    "maxNote": 74,
+    "vocalSeparated": true
   },
   {
-    "title": "사랑참...",
-    "artist": "디셈버",
-    "minNote": 53,
-    "maxNote": 69
+    "title": "Welcome to the Show",
+    "artist": "DAY6 (데이식스)",
+    "minNote": 56,
+    "maxNote": 69,
+    "vocalSeparated": true
   },
   {
     "title": "나는 반딧불",
     "artist": "황가람",
     "minNote": 50,
-    "maxNote": 64
+    "maxNote": 64,
+    "vocalSeparated": true
   },
   {
-    "title": "모든 날, 모든 순간 (Every Day, Every Moment)(키스먼저할까요? OST)",
-    "artist": "폴킴",
+    "title": "Love Love Love (Feat. Yoong Jin Of Casker)",
+    "artist": "에픽하이 (EPIK HIGH)",
+    "minNote": 53,
+    "maxNote": 69,
+    "vocalSeparated": true
+  },
+  {
+    "title": "다정히 내 이름을 부르면",
+    "artist": "경서예지",
+    "minNote": 58,
+    "maxNote": 72,
+    "vocalSeparated": true
+  },
+  {
+    "title": "Vitamin ME",
+    "artist": "프로미스나인",
+    "minNote": 61,
+    "maxNote": 73,
+    "vocalSeparated": true
+  },
+  {
+    "title": "사랑인가 봐",
+    "artist": "멜로망스",
     "minNote": 56,
-    "maxNote": 63
+    "maxNote": 68,
+    "vocalSeparated": true
   },
   {
-    "title": "残酷な天使のテーゼ(新世紀エヴァンゲリオン OP)",
-    "artist": "高橋洋子",
+    "title": "첫 만남은 계획대로 되지 않아",
+    "artist": "TWS (투어스)",
+    "minNote": 58,
+    "maxNote": 72,
+    "vocalSeparated": true
+  },
+  {
+    "title": "STYLE",
+    "artist": "Hearts2Hearts (하츠투하츠)",
     "minNote": 60,
-    "maxNote": 68
+    "maxNote": 70,
+    "vocalSeparated": true
   },
   {
-    "title": "행복한 나를",
-    "artist": "허각(Feat.존박)",
-    "minNote": 54,
-    "maxNote": 67
-  },
-  {
-    "title": "이 소설의 끝을 다시 써보려 해",
-    "artist": "한동근",
-    "minNote": 55,
-    "maxNote": 68
-  },
-  {
-    "title": "거리에서",
-    "artist": "성시경",
-    "minNote": 53,
-    "maxNote": 66
-  },
-  {
-    "title": "흰수염고래",
-    "artist": "윤도현밴드",
-    "minNote": 53,
-    "maxNote": 70
-  },
-  {
-    "title": "그런일은",
-    "artist": "박화요비",
-    "minNote": 58,
-    "maxNote": 74
-  },
-  {
-    "title": "소녀(응답하라1988 OST)",
-    "artist": "오혁",
-    "minNote": 51,
-    "maxNote": 63
-  },
-  {
-    "title": "숙녀에게",
-    "artist": "변진섭",
-    "minNote": 55,
-    "maxNote": 66
-  },
-  {
-    "title": "Hello",
-    "artist": "허각",
+    "title": "Die With A Smile",
+    "artist": "Lady Gaga",
     "minNote": 56,
-    "maxNote": 66
+    "maxNote": 72,
+    "vocalSeparated": true
   },
   {
-    "title": "기억을 걷는 시간",
-    "artist": "넬",
+    "title": "청혼하지 않을 이유를 못 찾았어",
+    "artist": "이무진",
+    "minNote": 54,
+    "maxNote": 67,
+    "vocalSeparated": true
+  },
+  {
+    "title": "APT.",
+    "artist": "로제 (ROSÉ)",
+    "minNote": 62,
+    "maxNote": 70,
+    "vocalSeparated": true
+  },
+  {
+    "title": "Magnetic",
+    "artist": "아일릿(ILLIT)",
+    "minNote": 57,
+    "maxNote": 68,
+    "vocalSeparated": true
+  },
+  {
+    "title": "Hype Boy",
+    "artist": "NewJeans",
+    "minNote": 57,
+    "maxNote": 69,
+    "vocalSeparated": true
+  },
+  {
+    "title": "사랑은 봄비처럼...이별은 겨울비처럼...",
+    "artist": "임현정",
     "minNote": 58,
-    "maxNote": 70
+    "maxNote": 67,
+    "vocalSeparated": true
   },
   {
-    "title": "사랑한만큼",
-    "artist": "Tim",
-    "minNote": 54,
-    "maxNote": 66
-  },
-  {
-    "title": "그날처럼",
-    "artist": "장덕철",
-    "minNote": 51,
-    "maxNote": 68
-  },
-  {
-    "title": "슬픈 초대장",
-    "artist": "순순희(지환)",
-    "minNote": 54,
-    "maxNote": 69
-  },
-  {
-    "title": "サムライハート (Some Like it Hot)(銀魂 ED)",
-    "artist": "SPYAIR",
-    "minNote": 51,
-    "maxNote": 70
-  },
-  {
-    "title": "ヒロイン",
-    "artist": "back number",
-    "minNote": 55,
-    "maxNote": 68
-  },
-  {
-    "title": "Lemon(ドラマ'アンナチュラル' OST)",
-    "artist": "米津玄師",
-    "minNote": 52,
-    "maxNote": 64
+    "title": "REBEL HEART",
+    "artist": "IVE (아이브)",
+    "minNote": 59,
+    "maxNote": 71,
+    "vocalSeparated": true
   }
 ]

@@ -1,16 +1,20 @@
 """
-TJ미디어 인기차트 곡들의 음역대(최저음~최고음)를 오디오 분석으로 추출해서
+멜론(+Apple 폴백) 인기차트 곡들의 음역대(최저음~최고음)를 오디오 분석으로 추출해서
 FitCh 백엔드(/chart/vocal-ranges/bulk-upsert)에 등록하는 배치 스크립트.
 
 이 버전은 보컬 분리(demucs)를 먼저 거친 뒤 분리된 보컬 트랙만으로 피치를
 분석해서 반주/코러스 간섭을 줄인다. 대신 곡당 처리 시간이 꽤 늘어난다
 (모델 로딩 + 분리 자체가 CPU에서 곡당 30초~2분 정도 걸릴 수 있음).
 
+이미 백엔드에 음역대가 등록된 곡은 자동으로 스킵해서 중복 분석을 피한다
+(SKIP_EXISTING = True일 때).
+
 사전 설치 필요:
     pip install --break-system-packages -q demucs
 """
 
 import os
+import re
 import glob
 import shutil
 import subprocess
@@ -21,15 +25,28 @@ import librosa
 import requests
 
 # ====== 설정 (본인 값으로 수정) ======
-CHART_API = "https://fitch-fe.vercel.app/api/tjchart?limit=100"
+CHART_API = "https://fitch-fe.vercel.app/api/chart?limit=100"  # 멜론(실패 시 Apple 폴백) 차트
 API_BASE = "https://brian-alabama-quarters-promises.trycloudflare.com"
-LOGIN_USERNAME = "im3zero"
-LOGIN_PASSWORD = "00000000"
+LOGIN_USERNAME = "testbot01"
+LOGIN_PASSWORD = "testpass123"
 OUTPUT_JSON = "vocal_ranges_result.json"
 TEST_LIMIT = None
 
-# 빈 set() = 필터링 없이 TJ차트 100곡 전체를 돌림.
+# 이미 백엔드에 음역대가 있는 곡은 건너뛰기 (시간 절약). 강제로 전부 다시
+# 돌리고 싶으면 False로.
+# fmin 버그(C3->C2) 수정 전에 분석된 기존 값들이 다 틀렸을 수 있어서,
+# 이번엔 전체를 다시 돌리기 위해 False로 둠.
+SKIP_EXISTING = False
+
+# 빈 set() = 필터링 없이 차트 전체를 돌림.
 RETRY_ONLY_TITLES = set()
+
+# 백그라운드(nohup)로 돌릴 때는 input()으로 y/n을 물어볼 수 없어서(멈춰버림),
+# 분석 끝나면 묻지 않고 바로 업로드하도록 함.
+AUTO_UPLOAD = True
+
+# 보컬 분리 실패해서 원본(반주 포함) 오디오로 분석된 곡 목록을 따로 기록.
+INST_FALLBACK_JSON = "inst_fallback_songs.json"
 
 SONG_URL_OVERRIDES = {
     "바다의 왕자": "https://youtu.be/-kqdnx9qw28",
@@ -46,11 +63,40 @@ DEMUCS_OUT_DIR = "separated"
 DEMUCS_MODEL = "htdemucs"
 
 
+def build_song_key(title: str, artist: str) -> str:
+    """프론트(lib/api.ts)의 buildSongKey와 동일한 규칙: 공백 정규화 후 title::artist."""
+    def norm(s: str) -> str:
+        return re.sub(r"\s+", " ", (s or "").strip())
+    return f"{norm(title)}::{norm(artist)}"
+
+
+def fetch_existing_song_keys(songs):
+    """백엔드에 이미 음역대가 등록된 곡들의 song key 집합을 조회.
+    프론트가 쓰는 것과 같은 배치 조회 엔드포인트(POST /chart/vocal-ranges)를 재사용."""
+    if not songs:
+        return set()
+    payload = [{"title": s["title"], "artist": s["artist"]} for s in songs]
+    try:
+        res = requests.post(f"{API_BASE}/chart/vocal-ranges", json=payload, timeout=30)
+        res.raise_for_status()
+        data = res.json()  # { "title::artist": {minNote, maxNote}, ... }
+        return set(data.keys())
+    except Exception as e:
+        print(f"  ! 기존 음역대 조회 실패, 스킵 없이 전체 분석으로 진행: {e}")
+        return set()
+
+
 def fetch_chart_songs():
     res = requests.get(CHART_API)
     res.raise_for_status()
-    items = res.json()["items"]
-    songs = [{"title": it["title"], "artist": it["singer"]} for it in items]
+    data = res.json()
+
+    source = data.get("source", "melon")
+    print(f"차트 소스: {source}")
+
+    results = data.get("feed", {}).get("results", [])
+    songs = [{"title": r.get("name", ""), "artist": r.get("artistName", "")} for r in results]
+    songs = [s for s in songs if s["title"] and s["artist"]]  # 빈 값 방어
 
     if RETRY_ONLY_TITLES:
         before = len(songs)
@@ -63,6 +109,14 @@ def fetch_chart_songs():
 
     if TEST_LIMIT:
         songs = songs[:TEST_LIMIT]
+
+    if SKIP_EXISTING:
+        existing_keys = fetch_existing_song_keys(songs)
+        before = len(songs)
+        songs = [s for s in songs if build_song_key(s["title"], s["artist"]) not in existing_keys]
+        skipped = before - len(songs)
+        print(f"이미 분석된 곡 {skipped}개 제외 -> 신규 분석 대상 {len(songs)}곡")
+
     return songs
 
 
@@ -138,8 +192,12 @@ def separate_vocals(audio_path: str, basename: str):
 
 def estimate_range_midi(audio_path: str):
     y, sr = librosa.load(audio_path, sr=22050)
+    # fmin을 C3(130.8Hz)로 두면 남자 저음 보컬(G2~A2, 약 98~110Hz)의 실제
+    # 기본주파수가 탐색 범위 밖이라, pYIN이 그 2배음(한 옥타브 위)을
+    # 기본주파수로 착각해서 남자 노래만 체계적으로 한 옥타브 높게 잡히는
+    # 버그가 있었음. C2(65.4Hz)까지 낮춰서 남자 저음도 제대로 잡히게 함.
     f0, voiced_flag, voiced_probs = librosa.pyin(
-        y, fmin=librosa.note_to_hz("C3"), fmax=librosa.note_to_hz("C6")
+        y, fmin=librosa.note_to_hz("C2"), fmax=librosa.note_to_hz("C6")
     )
 
     mask = voiced_flag & (voiced_probs >= 0.5) & ~np.isnan(f0)
@@ -160,10 +218,11 @@ def try_extract(raw_audio_path: str, basename: str):
     # 1) 보컬 분리 먼저 시도
     vocals_path = separate_vocals(raw_audio_path, basename)
     analyze_path = vocals_path if vocals_path else raw_audio_path
-    if vocals_path:
+    vocal_separated = bool(vocals_path)
+    if vocal_separated:
         print("  -> 보컬 분리 성공, 분리된 트랙으로 분석")
     else:
-        print("  -> 보컬 분리 실패, 원본 오디오로 분석")
+        print("  -> 보컬 분리 실패, 원본 오디오로 분석 (반주 포함 — 부정확할 수 있음)")
 
     try:
         r = estimate_range_midi(analyze_path)
@@ -173,7 +232,7 @@ def try_extract(raw_audio_path: str, basename: str):
     finally:
         cleanup_temp(basename)
         cleanup_demucs_output(basename)
-    return r
+    return r, vocal_separated
 
 
 def analyze_one(artist: str, title: str, basename: str):
@@ -182,11 +241,11 @@ def analyze_one(artist: str, title: str, basename: str):
         print(f"  지정된 URL로 다운로드: {override_url}")
         audio_path = download_audio_from(override_url, basename)
         if audio_path:
-            r = try_extract(audio_path, basename)
+            r, vocal_separated = try_extract(audio_path, basename)
             if r:
-                return r
+                return r, vocal_separated
             print("  -> 지정 URL로도 분석 결과 없음")
-        return None
+        return None, False
 
     for suffix in QUERY_SUFFIXES:
         query = f"{artist} {title} {suffix}".strip()
@@ -194,52 +253,74 @@ def analyze_one(artist: str, title: str, basename: str):
         audio_path = download_audio_from(f"ytsearch1:{query}", basename)
         if not audio_path:
             continue
-        r = try_extract(audio_path, basename)
+        r, vocal_separated = try_extract(audio_path, basename)
         if r:
-            return r
+            return r, vocal_separated
         print("  -> 이 검색어로는 결과 없음, 다음 검색어로 재시도")
-    return None
+    return None, False
 
 
 def main():
     songs = fetch_chart_songs()
     print(f"분석 대상 {len(songs)}곡 불러옴 (보컬 분리 사용)")
 
+    if not songs:
+        print("분석할 신규 곡이 없어요. 종료합니다.")
+        return
+
     results = []
+    inst_fallback = []  # 보컬 분리 실패해서 원본(반주 포함)으로 분석된 곡들
     for i, s in enumerate(songs, 1):
         title, artist = s["title"], s["artist"]
         basename = f"temp_audio_{i}"
-        print(f"[{i}/{len(songs)}] {artist} - {title}")
+        print(f"[{i}/{len(songs)}] {artist} - {title}", flush=True)
 
-        r = analyze_one(artist, title, basename)
+        r, vocal_separated = analyze_one(artist, title, basename)
 
         if r:
             min_note, max_note = r
-            print(f"  -> minNote={min_note}, maxNote={max_note}")
+            print(f"  -> minNote={min_note}, maxNote={max_note}", flush=True)
             results.append({
                 "title": title, "artist": artist,
-                "minNote": min_note, "maxNote": max_note
+                "minNote": min_note, "maxNote": max_note,
+                "vocalSeparated": vocal_separated,
             })
+            if not vocal_separated:
+                inst_fallback.append({"title": title, "artist": artist})
         else:
-            print("  -> 모든 방법으로도 분석 결과 없음 (건너뜀)")
+            print("  -> 모든 방법으로도 분석 결과 없음 (건너뜀)", flush=True)
 
         # 도중에 죽어도 여태까지 결과는 남도록 매 곡마다 저장
         with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
             json.dump(results, f, ensure_ascii=False, indent=2)
+        with open(INST_FALLBACK_JSON, "w", encoding="utf-8") as f:
+            json.dump(inst_fallback, f, ensure_ascii=False, indent=2)
 
         time.sleep(1)
 
-    print(f"\n총 {len(results)}곡 분석 완료 -> {OUTPUT_JSON}")
+    print(f"\n총 {len(results)}곡 분석 완료 -> {OUTPUT_JSON}", flush=True)
+    print(f"그 중 보컬분리 실패(원본/반주포함) 곡: {len(inst_fallback)}곡 -> {INST_FALLBACK_JSON}", flush=True)
+    for s in inst_fallback:
+        print(f"  - {s['artist']} - {s['title']}", flush=True)
 
-    upload = input("백엔드에 바로 업로드할까요? (y/n): ")
-    if upload.lower() == "y":
+    if AUTO_UPLOAD:
+        do_upload = True
+    else:
+        do_upload = input("백엔드에 바로 업로드할까요? (y/n): ").lower() == "y"
+
+    if do_upload:
+        # bulk-upsert 요청 바디에는 vocalSeparated 필드가 없을 수 있으니 제거하고 전송
+        upload_payload = [
+            {"title": r["title"], "artist": r["artist"], "minNote": r["minNote"], "maxNote": r["maxNote"]}
+            for r in results
+        ]
         token = get_token()
         res = requests.post(
             f"{API_BASE}/chart/vocal-ranges/bulk-upsert",
             headers={"Authorization": f"Bearer {token}"},
-            json=results
+            json=upload_payload
         )
-        print(res.status_code, res.text)
+        print(res.status_code, res.text, flush=True)
 
 
 if __name__ == "__main__":
