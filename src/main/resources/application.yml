@@ -47,7 +47,7 @@ ai:
     url: http://localhost:5000
 server:
   port: 8080
-
+  forward-headers-strategy: framework
 app:
   oauth:
     redirect-uri: "https://fitch-fe.vercel.app/oauth/success"
