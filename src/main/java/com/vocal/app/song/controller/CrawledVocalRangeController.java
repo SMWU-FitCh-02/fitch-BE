@@ -4,12 +4,15 @@ import com.vocal.app.song.dto.CrawledVocalRangeResponse;
 import com.vocal.app.song.dto.SongKeyRequest;
 import com.vocal.app.song.dto.VocalRangeUpsertRequest;
 import com.vocal.app.song.entity.CrawledSongVocalRange;
+import com.vocal.app.song.entity.SongAnalysisRequest;
 import com.vocal.app.song.repository.CrawledSongVocalRangeRepository;
+import com.vocal.app.song.repository.SongAnalysisRequestRepository;
 import com.vocal.app.global.util.NoteUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +24,7 @@ import java.util.stream.Collectors;
 public class CrawledVocalRangeController {
 
     private final CrawledSongVocalRangeRepository repository;
+    private final SongAnalysisRequestRepository requestRepository;
 
     // TJ 차트 곡 (title, artist) 리스트를 보내면 songKey -> 음역대 맵으로 매칭해서 돌려줌
     @PostMapping
@@ -67,6 +71,13 @@ public class CrawledVocalRangeController {
                         .build());
                 inserted++;
             }
+
+            // 사용자가 "분석 요청"한 곡이면 완료 처리
+            requestRepository.findBySongKey(key).ifPresent(req -> {
+                req.setStatus(SongAnalysisRequest.Status.DONE);
+                req.setCompletedAt(LocalDateTime.now());
+                requestRepository.save(req);
+            });
         }
         Map<String, Object> summary = new HashMap<>();
         summary.put("inserted", inserted);
