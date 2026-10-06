@@ -5,8 +5,12 @@ import com.vocal.app.song.entity.CrawledSongVocalRange;
 import com.vocal.app.song.entity.SongAnalysisRequest;
 import com.vocal.app.song.entity.SongAnalysisRequest.Status;
 import com.vocal.app.song.repository.CrawledSongVocalRangeRepository;
+import com.vocal.app.song.entity.SongAnalysisRequester;
 import com.vocal.app.song.repository.SongAnalysisRequestRepository;
+import com.vocal.app.song.repository.SongAnalysisRequesterRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -26,9 +30,10 @@ public class AnalysisRequestController {
 
     private final SongAnalysisRequestRepository requestRepository;
     private final CrawledSongVocalRangeRepository rangeRepository;
+    private final SongAnalysisRequesterRepository requesterRepository;
 
     @PostMapping
-    public Map<String, String> request(@RequestBody SongKeyRequest song) {
+    public Map<String, String> request(@RequestBody SongKeyRequest song, Authentication auth) {
         String title = song.getTitle() == null ? "" : song.getTitle().trim();
         String artist = song.getArtist() == null ? "" : song.getArtist().trim();
         Map<String, String> res = new HashMap<>();
@@ -38,6 +43,13 @@ public class AnalysisRequestController {
         }
 
         String key = CrawledSongVocalRange.buildKey(title, artist);
+
+        // 로그인한 사용자가 요청했다면 "내 요청 목록"에 남긴다.
+        if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)
+                && !requesterRepository.existsByUsernameAndSongKey(auth.getName(), key)) {
+            requesterRepository.save(SongAnalysisRequester.builder()
+                    .username(auth.getName()).title(title).artist(artist).songKey(key).build());
+        }
 
         // 이미 분석된 곡이면 요청할 필요 없음
         if (rangeRepository.findBySongKey(key).isPresent()) {
@@ -77,6 +89,28 @@ public class AnalysisRequestController {
             result.put(r.getSongKey(), r.getStatus().name());
         }
         return result;
+    }
+
+    // 내가 분석 요청한 곡 목록 (로그인 필요). status: PENDING / DONE / FAILED
+    @GetMapping("/mine")
+    public List<Map<String, String>> mine(Authentication auth) {
+        List<Map<String, String>> out = new ArrayList<>();
+        if (auth == null || auth instanceof AnonymousAuthenticationToken) return out;
+        for (SongAnalysisRequester q : requesterRepository.findByUsernameOrderByRequestedAtDesc(auth.getName())) {
+            String status;
+            if (rangeRepository.findBySongKey(q.getSongKey()).isPresent()) {
+                status = Status.DONE.name();
+            } else {
+                status = requestRepository.findBySongKey(q.getSongKey())
+                        .map(r -> r.getStatus().name()).orElse(Status.PENDING.name());
+            }
+            Map<String, String> m = new HashMap<>();
+            m.put("title", q.getTitle());
+            m.put("artist", q.getArtist());
+            m.put("status", status);
+            out.add(m);
+        }
+        return out;
     }
 
     @GetMapping("/pending")
