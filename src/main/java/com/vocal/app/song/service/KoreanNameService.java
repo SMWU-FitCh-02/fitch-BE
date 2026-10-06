@@ -9,6 +9,7 @@ import software.amazon.awssdk.services.bedrockruntime.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,6 +30,8 @@ public class KoreanNameService {
             .region(Region.AP_SOUTHEAST_2)
             .build();
 
+    private static final int CHUNK = 10;
+
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final ConcurrentHashMap<String, Item> cache = new ConcurrentHashMap<>();
 
@@ -43,11 +46,18 @@ public class KoreanNameService {
         }
 
         if (!missing.isEmpty()) {
-            try {
-                translate(missing);
-            } catch (Exception e) {
-                log.error("한글 표기 변환 실패", e);
+            // 한 번에 많이 물으면 AI가 곡을 빼먹거나 느려져서, 10곡씩 나눠 동시에 묻는다.
+            List<List<Item>> chunks = new ArrayList<>();
+            for (int i = 0; i < missing.size(); i += CHUNK) {
+                chunks.add(missing.subList(i, Math.min(i + CHUNK, missing.size())));
             }
+            chunks.parallelStream().forEach(chunk -> {
+                try {
+                    translate(chunk);
+                } catch (Exception e) {
+                    log.error("한글 표기 변환 실패", e);
+                }
+            });
         }
 
         List<Item> out = new ArrayList<>();
@@ -69,8 +79,8 @@ public class KoreanNameService {
         - 한국에서 발매된 곡이고 한국에서 쓰는 한글 제목이 있으면, 그 공식 한글 제목으로 바꿔.
         - 제목이 원래 영어인 곡이거나, 외국 곡이거나, 한글 제목이 확실하지 않으면 제목은 원래 그대로 둬. 절대 지어내거나 번역하지 마.
         - 가수는 한국 가수면 한국에서 쓰는 한글 이름으로 바꿔(예: IU → 아이유, HANRORO → 한로로). 외국 가수거나 확실하지 않으면 그대로 둬.
-        번호 순서 그대로, 각 곡을 [제목, 가수] 쌍으로 담은 JSON 배열만 출력해. 다른 설명은 하지 마.
-        예시 출력: [["좋은 날","아이유"],["Landing in Love","한로로"]]
+        곡마다 {"n":번호,"title":제목,"artist":가수} 형태의 객체를 만들어 JSON 배열로만 출력해. 목록의 모든 곡을 하나도 빼지 말고 포함하고, 다른 설명은 하지 마.
+        예시 출력: [{"n":0,"title":"좋은 날","artist":"아이유"},{"n":1,"title":"Landing in Love","artist":"한로로"}]
         """;
 
         ConverseResponse response = client.converse(req -> req
@@ -95,14 +105,17 @@ public class KoreanNameService {
         // 모델이 앞뒤에 설명을 붙이는 경우 대비: 가장 바깥 [ ... ] 만 파싱
         Matcher m = Pattern.compile("\\[.*\\]", Pattern.DOTALL).matcher(output);
         if (!m.find()) return;
-        String[][] arr = objectMapper.readValue(m.group(), String[][].class);
-        if (arr.length != items.size()) {
-            log.warn("한글 표기 개수 불일치: 요청 {} / 응답 {}", items.size(), arr.length);
-            return;
-        }
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == null || arr[i].length < 2 || arr[i][0] == null || arr[i][1] == null) continue;
-            cache.put(key(items.get(i)), new Item(arr[i][0].trim(), arr[i][1].trim()));
+        // 번호(n)로 짝을 맞추기 때문에, AI가 몇 곡을 빼먹어도 나머지는 그대로 쓴다.
+        List<Map<String, Object>> arr = objectMapper.readValue(
+                m.group(), new com.fasterxml.jackson.core.type.TypeReference<List<Map<String, Object>>>() {});
+        for (Map<String, Object> row : arr) {
+            Object n = row.get("n");
+            Object t = row.get("title");
+            Object ar = row.get("artist");
+            if (!(n instanceof Number) || t == null || ar == null) continue;
+            int idx = ((Number) n).intValue();
+            if (idx < 0 || idx >= items.size()) continue;
+            cache.put(key(items.get(idx)), new Item(t.toString().trim(), ar.toString().trim()));
         }
     }
 }
