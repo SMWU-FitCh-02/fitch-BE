@@ -60,6 +60,8 @@ public class SecurityConfig {
                         // bulk-upsert(관리자용 데이터 쓰기)는 계속 인증 필요 — 아래 /chart/** 공개
                         // 규칙보다 먼저 와야 함(더 구체적인 규칙이 먼저 매칭되어야 함).
                         .requestMatchers("/chart/vocal-ranges/bulk-upsert").authenticated()
+                        // 분석 워커 전용(대기 목록 조회/실패 보고)은 로그인 필요. 요청/상태 조회는 공개.
+                        .requestMatchers("/chart/analysis-requests/pending", "/chart/analysis-requests/fail").authenticated()
                         // 차트 목록/음역대/아티스트 성별 조회는 로그인 없이도 보이는 공개
                         // 데이터라서 허용 (GET으로 조회하는 것도 있고, 곡 목록을 body에
                         // 담아 보내는 배치조회라 POST로 호출하는 것도 있어서 메서드 제한 없이 허용).

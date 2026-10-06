@@ -9,6 +9,11 @@ FitCh 백엔드(/chart/vocal-ranges/bulk-upsert)에 등록하는 배치 스크�
 이미 백엔드에 음역대가 등록된 곡은 자동으로 스킵해서 중복 분석을 피한다
 (SKIP_EXISTING = True일 때).
 
+[이번 실행 전용 수정] `songs` 테이블엔 있는데 `crawled_song_vocal_ranges`엔
+없는 35곡(대부분 K-pop 아이돌곡, 일부는 예전 히트곡이라 지금 실시간 차트
+100위 안에 없음)을 분석하기 위해, CHART_API에서 차트를 받아 필터링하는
+대신 TARGET_SONGS 고정 리스트를 바로 쓰도록 fetch_chart_songs()를 바꿈.
+
 사전 설치 필요:
     pip install --break-system-packages -q demucs
 """
@@ -29,16 +34,55 @@ CHART_API = "https://fitch-fe.vercel.app/api/chart?limit=100"  # 멜론(실패 �
 API_BASE = "https://brian-alabama-quarters-promises.trycloudflare.com"
 LOGIN_USERNAME = "testbot01"
 LOGIN_PASSWORD = "testpass123"
-OUTPUT_JSON = "vocal_ranges_result.json"
+OUTPUT_JSON = "vocal_ranges_result_missing35.json"
 TEST_LIMIT = None
+
+# "songs" 테이블엔 있지만 "crawled_song_vocal_ranges"엔 없어서 더미값이 남아있던
+# 35곡. DB에서 직접 뽑은 title+artist 그대로 넣었음 (차트 API를 거치지 않음 —
+# 예전 히트곡이 많아서 실시간 차트에 없을 수 있기 때문).
+TARGET_SONGS = [
+    {"title": "I CANT STOP ME", "artist": "TWICE"},
+    {"title": "DICE", "artist": "NMIXX"},
+    {"title": "Money On My Mind", "artist": "Xdinary Heroes"},
+    {"title": "ATTITUDE", "artist": "IVE"},
+    {"title": "DINOSAUR", "artist": "AKMU"},
+    {"title": "Oh Boy", "artist": "Red Velvet"},
+    {"title": "O.O", "artist": "NMIXX"},
+    {"title": "I AM", "artist": "IVE"},
+    {"title": "과제곡", "artist": "이무진"},
+    {"title": "Cruel", "artist": "TWICE"},
+    {"title": "꽃길", "artist": "김세정"},
+    {"title": "사랑이었다", "artist": "LE SSERAFIM"},
+    {"title": "미아", "artist": "아이유"},
+    {"title": "해야 (HEYA)", "artist": "IVE"},
+    {"title": "LOVEADE", "artist": "VIVIZ"},
+    {"title": "OMy!", "artist": "IZ*ONE"},
+    {"title": "ESPRESSO", "artist": "TWICE"},
+    {"title": "녹아요", "artist": "TWICE"},
+    {"title": "You Think", "artist": "소녀시대"},
+    {"title": "Psycho", "artist": "Red Velvet"},
+    {"title": "Dreams Come True", "artist": "aespa"},
+    {"title": "I WANT YOU BACK", "artist": "TWICE"},
+    {"title": "Super Lady", "artist": "(여자)아이들"},
+    {"title": "Savage", "artist": "aespa"},
+    {"title": "좋은 날", "artist": "아이유"},
+    {"title": "Girls Never Die", "artist": "tripleS"},
+    {"title": "Monster", "artist": "EXO"},
+    {"title": "Rookie", "artist": "Red Velvet"},
+    {"title": "Cover Up", "artist": "소녀시대"},
+    {"title": "Talk that Talk", "artist": "TWICE"},
+    {"title": "Attention", "artist": "NewJeans"},
+    {"title": "LOVE DIVE", "artist": "IVE"},
+    {"title": "After LIKE", "artist": "IVE"},
+    {"title": "사건의 지평선", "artist": "윤하"},
+    {"title": "숨이차", "artist": "세븐틴"},
+]
 
 # 이미 백엔드에 음역대가 있는 곡은 건너뛰기 (시간 절약). 강제로 전부 다시
 # 돌리고 싶으면 False로.
-# fmin 버그(C3->C2) 수정 전에 분석된 기존 값들이 다 틀렸을 수 있어서,
-# 이번엔 전체를 다시 돌리기 위해 False로 둠.
 SKIP_EXISTING = False
 
-# 빈 set() = 필터링 없이 차트 전체를 돌림.
+# (이번 실행에선 TARGET_SONGS를 직접 쓰므로 안 쓰임 — 남겨만 둠)
 RETRY_ONLY_TITLES = set()
 
 # 백그라운드(nohup)로 돌릴 때는 input()으로 y/n을 물어볼 수 없어서(멈춰버림),
@@ -46,7 +90,7 @@ RETRY_ONLY_TITLES = set()
 AUTO_UPLOAD = True
 
 # 보컬 분리 실패해서 원본(반주 포함) 오디오로 분석된 곡 목록을 따로 기록.
-INST_FALLBACK_JSON = "inst_fallback_songs.json"
+INST_FALLBACK_JSON = "inst_fallback_songs_missing35.json"
 
 SONG_URL_OVERRIDES = {
     "바다의 왕자": "https://youtu.be/-kqdnx9qw28",
@@ -87,6 +131,23 @@ def fetch_existing_song_keys(songs):
 
 
 def fetch_chart_songs():
+    # [이번 실행 전용] 차트 API를 거치지 않고 TARGET_SONGS를 그대로 사용.
+    if TARGET_SONGS:
+        songs = list(TARGET_SONGS)
+        print(f"TARGET_SONGS 고정 리스트 사용: {len(songs)}곡 (차트 API 안 거침)")
+
+        if TEST_LIMIT:
+            songs = songs[:TEST_LIMIT]
+
+        if SKIP_EXISTING:
+            existing_keys = fetch_existing_song_keys(songs)
+            before = len(songs)
+            songs = [s for s in songs if build_song_key(s["title"], s["artist"]) not in existing_keys]
+            skipped = before - len(songs)
+            print(f"이미 분석된 곡 {skipped}개 제외 -> 신규 분석 대상 {len(songs)}곡")
+
+        return songs
+
     res = requests.get(CHART_API)
     res.raise_for_status()
     data = res.json()
