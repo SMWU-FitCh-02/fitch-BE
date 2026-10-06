@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class KoreanNameController {
 
-    public record Request(List<Item> items) {}
+    public record Request(List<Item> items, List<Item> known) {}
     public record Response(List<Item> items) {}
 
     private final KoreanNameService service;
@@ -22,6 +22,8 @@ public class KoreanNameController {
     public Response koNames(@RequestBody Request request) {
         List<Item> in = request.items() == null ? new ArrayList<>() : request.items();
         if (in.size() > 30) in = in.subList(0, 30); // 한 번에 너무 많이 보내는 것 방지
-        return new Response(service.toKorean(in));
+        List<Item> known = request.known() == null ? new ArrayList<>() : request.known();
+        if (known.size() > 60) known = known.subList(0, 60);
+        return new Response(service.toKorean(in, known));
     }
 }
