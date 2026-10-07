@@ -50,6 +50,21 @@ public class VoiceService {
         return toResponse(userId, saved);
     }
 
+    // 가이드 음(탭으로 판정하는) 테스트 결과를 그대로 저장 — AI 분석/녹음 없이 프론트에서 계산한 min/max를 바로 기록
+    @Transactional
+    public VocalRangeResponse saveManualRange(Long userId, Integer minNote, Integer maxNote) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자: " + userId));
+
+        VocalRange saved = vocalRangeRepository.save(VocalRange.builder()
+                .user(user).minNote(minNote).maxNote(maxNote).build());
+
+        vocalHistoryRepository.save(VocalHistory.builder()
+                .user(user).minNote(minNote).maxNote(maxNote).build());
+
+        return toResponse(userId, saved);
+    }
+
     @Transactional(readOnly = true)
     public VocalRangeResponse getVocalRange(Long userId) {
         return toResponse(userId, vocalRangeRepository

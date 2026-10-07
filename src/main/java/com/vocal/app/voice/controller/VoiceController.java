@@ -1,6 +1,7 @@
 package com.vocal.app.voice.controller;
 
 import com.vocal.app.voice.dto.VocalRangeResponse;
+import com.vocal.app.voice.dto.VocalRangeSaveRequest;
 import com.vocal.app.voice.service.VoiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,5 +22,12 @@ public class VoiceController {
     @GetMapping("/user/{id}/vocal-range")
     public ResponseEntity<VocalRangeResponse> getVocalRange(@PathVariable("id") Long userId) {
         return ResponseEntity.ok(voiceService.getVocalRange(userId));
+    }
+
+    @PostMapping("/user/{id}/vocal-range")
+    public ResponseEntity<VocalRangeResponse> saveVocalRange(
+            @PathVariable("id") Long userId,
+            @RequestBody VocalRangeSaveRequest req) {
+        return ResponseEntity.ok(voiceService.saveManualRange(userId, req.getMinNote(), req.getMaxNote()));
     }
 }
